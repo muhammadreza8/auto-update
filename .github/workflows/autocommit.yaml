@@ -1,0 +1,54 @@
+name: Auto commit
+
+on:
+
+  push:
+    branches:
+      - main
+      
+  schedule:
+  - cron: "0,5,10,30,50 1,3,5,7,9,11,13,15,17,19,21,23 * * *" # See https://crontab.guru/#0_7,9,11_*_*_1,3
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DEBUG 
+        run: echo "::debug::Ref = ${{github.ref}}"
+      - uses: actions/checkout@v3  
+        with:
+         persist-credentials: false
+         fetch-depth: 0
+
+      - name: Modify last update
+        run: |
+          d=`date '+%Y-%m-%dT%H:%M:%SZ'`
+          echo $d > LAST_UPDATED
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "penjelasankita@gmail.com"
+          git config --local user.name "muhammadreza8"
+          git add -A
+          
+          arr[0]="update(bot): auto 1 auto commit"
+          arr[1]="update(bot): auto 2 auto commit"
+          arr[2]="update(bot): auto 3 auto commit"
+          arr[3]="update(bot): auto 4 auto commit"
+          arr[4]="update(bot): auto 5 auto commit"
+          arr[5]="update(bot): auto 6 auto commit"
+          arr[6]="update(bot): auto 7 auto commit"
+          arr[7]="update(bot): auto 8 auto commit"
+          arr[8]="update(bot): auto 9 auto commit"
+          arr[9]="update(bot): auto 10 auto commit"
+          
+          rand=$[$RANDOM % ${#arr[@]}]
+          
+          git commit -m "${arr[$rand]}"
+          
+      - name: Push Back
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          force: true
+          directory: '.'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
