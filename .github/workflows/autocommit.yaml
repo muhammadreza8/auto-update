@@ -47,7 +47,7 @@ jobs:
           git commit -m "${arr[$rand]}"
           
       - name: Push Back
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@main
         with:
           force: true
           directory: '.'
