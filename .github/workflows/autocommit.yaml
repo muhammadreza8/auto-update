@@ -4,7 +4,7 @@ on:
 
   push:
     branches:
-      - main
+      - master
       
   schedule:
   - cron: "0,4,8,20,54 2,4,6,8,10,12,14,16,18,20,22 * * *" # See https://crontab.guru/#0_7,9,11_*_*_1,3
